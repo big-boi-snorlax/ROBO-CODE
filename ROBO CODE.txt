@@ -1,0 +1,59 @@
+void check_triballs() {
+double heading = inertial_sensor.get_heading();
+if (heading < 0 || heading > 360) {
+	try {
+  		double heading = inertial_sensor.get_heading();
+  
+  		if (heading >= 0 && heading <= SOME_LOWER_VALUE) {
+    
+  		} else if (heading > SOME_LOWER_VALUE && heading <= SOME_UPPER_VALUE) {
+   
+  		} else {
+   
+    			break;
+  		}
+	} catch (const std::exception& e) {
+  		std::cerr << "Caught exception: " << e.what() << '\n';
+
+	} else if (heading > SOME_VALUE) {
+		  break; 
+		}
+	}
+
+
+void comp_auton() {
+  chassis.set_drive_pid(52, 127);
+  chassis.wait_until(51);
+  lift_piston.set_value(true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-55, 127);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-93, 100);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-25, 100);
+  chassis.wait_drive();
+  back_piston.set_value(true);
+  lift.move_velocity(-200);
+  pros::delay(200);
+  conveyor.move_velocity(-200);
+
+  int yuvarajanbarasu = 1;
+  while (yuvarajanbarasu != 0){
+    chassis.set_drive_pid(17 * yuvarajanbarasu, 100);
+    chassis.wait_drive();
+    pros::delay(500);
+    yuvarajanbarasu *= -1;
+    
+    if (yuvarajanbarasu > 0) {
+      lift.move_velocity(200); 
+      conveyor.move_velocity(200); 
+    } else {
+      lift.move_velocity(-200); 
+      conveyor.move_velocity(-200); 
+    }
+    
+    if (//check_triballs()) {
+      break; 
+    }
+  }
+}
